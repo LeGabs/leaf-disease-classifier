@@ -1,12 +1,14 @@
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
-import preprocess_image
 
-def process(path):
-    image_processed = preprocess_image.preprocess_image(path)
-    
-    hist_h = cv2.calcHist([image_processed], [0], None, [179], [0, 179])
+def get_histogram(path):
+    image = cv2.imread(path)
+
+    if image is None:   
+        raise ValueError(f"Image at path {path} could not be loaded.")
+
+    hist_h = cv2.calcHist([image], [0], None, [179], [0, 179])
 
     return hist_h.flatten()
 
